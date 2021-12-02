@@ -17,6 +17,13 @@ namespace Hw1.Tests.Exercise3
             public const string Scissors = "Scissors";
         }
 
+        private static class ShapeRC
+        {
+            public const string Rock = "roCK";
+            public const string Paper = "PaPer";
+            public const string Scissors = "SciSSorS";
+        }
+
         private static class Outcome
         {
             public const string Win = "Win";
@@ -30,6 +37,9 @@ namespace Hw1.Tests.Exercise3
         [InlineData(Shape.Rock, Shape.Scissors, Shape.Paper)]
         [InlineData(Shape.Paper, Shape.Rock, Shape.Scissors)]
         [InlineData(Shape.Scissors, Shape.Paper, Shape.Rock)]
+        [InlineData(ShapeRC.Rock, Shape.Scissors, Shape.Paper)]
+        [InlineData(ShapeRC.Paper, Shape.Rock, Shape.Scissors)]
+        [InlineData(ShapeRC.Scissors, Shape.Paper, Shape.Rock)]
         public void Run_WithValidArgs_ReturnsGameResults(string playerShapeArg, string compLoseShape, string compWinsShape)
         {
             using var output = ConsoleOutputInterceptor.InterceptOutput();

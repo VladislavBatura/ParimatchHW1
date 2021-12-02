@@ -10,9 +10,16 @@ namespace Hw1.Tests.Exercise2
         private static class Shape
         {
             public const string Circle = "Circle";
+            public const string CircleRC = "cIRCle";
+
             public const string Square = "Square";
+            public const string SquareRC = "squARE";
+
             public const string Rect = "Rect";
+            public const string RectRC = "reCt";
+
             public const string Triangle = "Triangle";
+            public const string TriangleRC = "trianGle";
         }
 
         [Theory]
@@ -35,6 +42,38 @@ namespace Hw1.Tests.Exercise2
         [InlineData(new string[] { Shape.Triangle, "30.1", "45,2", "50,3" }, 672.148d, 0)]
 
         public void Run_WithValidShape_ReturnsShapeArea(string[] args, double area, int successCode)
+        {
+            using var output = ConsoleOutputInterceptor.InterceptOutput();
+            var app = new AreaCalcApplication();
+
+            var returnCode = app.Run(args);
+            Assert.Equal(successCode, returnCode);
+
+            var outputStr = output.ToString().NormalizeOutput(trimNewLineEnding: true);
+            var outputArea = outputStr.ParseDouble();
+            Assert.Equal(area, outputArea, 1);
+        }
+
+        [Theory]
+        // Circle
+        [InlineData(new string[] { Shape.CircleRC, "30" }, 2827.43d, 0)]
+        [InlineData(new string[] { Shape.CircleRC, "1.23" }, 4.75d, 0)]
+        [InlineData(new string[] { Shape.CircleRC, "1,23" }, 4.75d, 0)]
+        // Square
+        [InlineData(new string[] { Shape.SquareRC, "30" }, 900d, 0)]
+        [InlineData(new string[] { Shape.SquareRC, "1.23" }, 1.51d, 0)]
+        [InlineData(new string[] { Shape.SquareRC, "1,23" }, 1.51d, 0)]
+        // Rect
+        [InlineData(new string[] { Shape.RectRC, "30", "30" }, 900d, 0)]
+        [InlineData(new string[] { Shape.RectRC, "1.23", "4,56" }, 5.60d, 0)]
+        // Triangle-2
+        [InlineData(new string[] { Shape.TriangleRC, "30", "30" }, 450d, 0)]
+        [InlineData(new string[] { Shape.TriangleRC, "30.1", "30,2" }, 454.51d, 0)]
+        // Triangle-3
+        [InlineData(new string[] { Shape.TriangleRC, "30", "45", "50" }, 666.585d, 0)]
+        [InlineData(new string[] { Shape.TriangleRC, "30.1", "45,2", "50,3" }, 672.148d, 0)]
+
+        public void Run_WithValidShapeRandomCase_ReturnsShapeArea(string[] args, double area, int successCode)
         {
             using var output = ConsoleOutputInterceptor.InterceptOutput();
             var app = new AreaCalcApplication();
