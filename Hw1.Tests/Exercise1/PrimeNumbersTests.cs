@@ -8,6 +8,7 @@ namespace Hw1.Tests.Exercise1
     public class PrimeNumbersTests
     {
         [Theory]
+        [InlineData(new string[] { "5", "7" }, "5;7;", 0)]
         [InlineData(new string[] { "0", "10" }, "2;3;5;7;", 0)]
         [InlineData(new string[] { "-10", "10" }, "2;3;5;7;", 0)]
         [InlineData(new string[] { "10", "-10" }, "2;3;5;7;", 0)]
@@ -21,7 +22,7 @@ namespace Hw1.Tests.Exercise1
             var returnCode = app.Run(args);
             Assert.Equal(successCode, returnCode);
 
-            var outputStr = output.ToString();
+            var outputStr = output.ToString().NormalizeOutput(trimNewLineEnding: true);
             Assert.Equal(primeNumbers, outputStr);
         }
 
