@@ -26,9 +26,37 @@ build:
   tags:
     - docker-shared
 
-tests:
+tests_exercise1:
   stage: test
   script:
-    - 'dotnet test --no-restore'
+    - 'dotnet test --no-restore --filter DisplayName~Exercise1'
+  tags:
+    - docker-shared
+
+tests_exercise2:
+  stage: test
+  script:
+    - 'dotnet test --no-restore --filter DisplayName~Exercise2'
+  tags:
+    - docker-shared
+
+tests_exercise3:
+  stage: test
+  script:
+    - 'dotnet test --no-restore --filter DisplayName~Exercise3'
+  tags:
+    - docker-shared
+
+tests_exercise4:
+  stage: test
+  script:
+    - 'dotnet test --no-restore --filter DisplayName~Exercise4'
+  tags:
+    - docker-shared
+
+tests_exercise5:
+  stage: test
+  script:
+    - 'dotnet test --no-restore --filter DisplayName~Exercise5'
   tags:
     - docker-shared
