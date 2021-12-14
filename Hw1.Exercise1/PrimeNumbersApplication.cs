@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Globalization;
+using System.Collections.Generic;
 
 namespace Hw1.Exercise1
 {
@@ -19,7 +21,64 @@ namespace Hw1.Exercise1
         /// <returns>Return <c>0</c> in case of success and <c>-1</c> in case of failure.</returns>
         public int Run(string[] args)
         {
-            throw new NotImplementedException("Should be implemented by executor");
+            if (args == null || args.Length == 0)
+            {
+                return -1;
+            }
+
+            var border = new List<int>();
+            var max = 0;
+
+            for (var i = 0; i < args.Length; i++)
+            {
+                if (int.TryParse(args[i], out var j))
+                {
+                    border.Add(j);
+                    if (j > max)
+                    {
+                        max = j;
+                    }
+                }
+            }
+            if (border.Count < 2 || max < 3)
+            {
+                return -1;
+            }
+
+            var from = border[0];
+            var to = border[1];
+            var result = from > to ? PrimeNumbers(to, from) : PrimeNumbers(from, to);
+
+            Console.Write(result);
+
+            return 0;
+        }
+
+        public string PrimeNumbers(int from, int to)
+        {
+            var resultArray = new List<string>();
+
+            for (var i = from; i <= to; i++)
+            {
+                var b = true;
+                if (i is 0 or 1 or < 0)
+                {
+                    continue;
+                }
+                for (var j = 2; j < i; j++)
+                {
+                    if (i % j == 0)
+                    {
+                        b = false;
+                        break;
+                    }
+                }
+                if (b)
+                {
+                    resultArray.Add(Convert.ToString(i, CultureInfo.CurrentCulture));
+                }
+            }
+            return string.Join(';', resultArray) + ";";
         }
     }
 }

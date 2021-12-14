@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace Hw1.Exercise4
 {
@@ -20,7 +21,48 @@ namespace Hw1.Exercise4
         /// </returns>
         public int Run(string[] args)
         {
-            throw new NotImplementedException("Should be implemented by executor");
+            if (args == null || args.Length == 0)
+            {
+                return -1;
+            }
+
+            var array = new int[args.Length];
+
+            var sum = 0;
+            var average = 0d;
+
+            for (var i = 0; i < args.Length; i++)
+            {
+                if (int.TryParse(args[i], NumberStyles.Any, CultureInfo.InvariantCulture, out var value))
+                {
+                    array[i] = value;
+                    sum += value;
+                    average += value;
+                }
+                else
+                {
+                    return -1;
+                }
+            }
+
+            average /= array.Length;
+            Array.Sort(array);
+
+            var min = array[0];
+            var max = array[^1];
+
+            Console.WriteLine($"Min={min}");
+            Console.WriteLine($"Max={max}");
+            Console.WriteLine($"Sum={sum}");
+            Console.WriteLine($"Average={average}");
+            Console.WriteLine($"Count={array.Length}");
+            Console.Write("Sorted=");
+            foreach (var i in array)
+            {
+                Console.Write($"{i};");
+            }
+
+            return 0;
         }
     }
 }
